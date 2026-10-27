@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shashwat Sahu | AI/ML Engineer</title>
+  <meta name="description" content="Portfolio of Shashwat Sahu, B.Tech CSE student at SRM University AP specializing in AI/ML. Machine learning for weather, agriculture and railways." />
+  <meta name="theme-color" content="#0a1524" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+/* ============ Tokens ============ */
+:root {
+  --bg: #0a1524;
+  --bg-2: #0e1d31;
+  --ink: #e8f1f8;
+  --muted: #8fa6bb;
+  --line: rgba(143, 166, 187, 0.22);
+  --accent: #5cc8ff;
+  --accent-ink: #06121f;
+  --signal: #ffb454;
+  --chip: rgba(92, 200, 255, 0.1);
+  --radius: 10px;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --nav-h: 68px;
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --bg: #f2f6f9;
+  --bg-2: #e6eef4;
+  --ink: #0d1c2e;
+  --muted: #4f657a;
+  --line: rgba(13, 28, 46, 0.16);
+  --accent: #0a6fa8;
+  --accent-ink: #ffffff;
+  --signal: #a85500;
+  --chip: rgba(10, 111, 168, 0.09);
+  color-scheme: light;
+}
+
+/* ============ Base ============ */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s, color 0.3s;
+}
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.1; margin: 0; letter-spacing: -0.02em; }
+p { margin: 0 0 1rem; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+ul, ol { margin: 0; padding: 0; }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.wrap { width: min(1120px, 100% - 48px); margin-inline: auto; }
+.muted { color: var(--muted); }
+
+.skip {
+  position: absolute; left: 12px; top: -60px; z-index: 200;
+  background: var(--accent); color: var(--accent-ink);
+  padding: 10px 16px; border-radius: 8px; font-weight: 600; text-decoration: none;
+}
+.skip:focus { top: 12px; }
+
+.progress { position: fixed; inset: 0 0 auto 0; height: 3px; z-index: 120; }
+.progress span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--signal)); }
+
+/* ============ Nav ============ */
+.nav {
+  position: fixed; inset: 0 0 auto 0; z-index: 100;
+  height: var(--nav-h);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 max(24px, calc((100% - 1120px) / 2));
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s;
+}
+.nav.scrolled { border-bottom-color: var(--line); }
+.brand {
+  font-family: var(--font-display); font-weight: 800; font-size: 1.35rem;
+  color: var(--ink); text-decoration: none; letter-spacing: -0.03em;
+}
+.brand span { color: var(--signal); }
+.nav-links { list-style: none; display: flex; gap: 6px; }
+.nav-links a {
+  display: block; padding: 8px 14px; border-radius: 999px;
+  color: var(--muted); text-decoration: none; font-size: 0.95rem; font-weight: 500;
+  transition: color 0.2s, background-color 0.2s;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-links a.active { color: var(--ink); background: var(--chip); }
+.nav-tools { display: flex; gap: 8px; align-items: center; }
+.icon-btn {
+  width: 42px; height: 42px; display: grid; place-items: center;
+  background: transparent; border: 1px solid var(--line); border-radius: 50%;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+.icon-btn:hover { border-color: var(--accent); background: var(--chip); }
+.menu-btn { display: none; }
+:root[data-theme="dark"] .i-moon, :root[data-theme="light"] .i-sun { display: none; }
+
+/* ============ Buttons ============ */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 13px 24px; border-radius: 999px; font-weight: 600; font-size: 1rem;
+  text-decoration: none; border: 1.5px solid transparent; cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+.btn:hover { transform: translateY(-2px); text-decoration: none; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); }
+.btn.primary:hover { background: color-mix(in srgb, var(--accent) 85%, white); }
+.btn.ghost { border-color: var(--line); color: var(--ink); background: transparent; }
+.btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
+.btn.small { padding: 9px 18px; font-size: 0.92rem; }
+
+/* ============ Hero ============ */
+.hero {
+  position: relative; min-height: 100svh; display: flex; align-items: center;
+  padding: calc(var(--nav-h) + 40px) 0 80px; overflow: hidden;
+}
+#grid { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hero::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(90deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 82%, transparent) 38%, transparent 78%);
+}
+.hero-inner { position: relative; z-index: 2; width: min(1120px, 100% - 48px); margin-inline: auto; pointer-events: none; }
+.hero-inner > * { pointer-events: auto; }
+.hero-kicker {
+  font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; color: var(--signal); margin-bottom: 20px;
+}
+.hero h1 { font-size: clamp(2.6rem, 6.6vw, 5.4rem); font-weight: 800; max-width: 15ch; }
+.rotator {
+  display: inline-block; color: var(--accent);
+  border-bottom: 4px solid var(--signal); padding-bottom: 2px;
+}
+.hero-sub { max-width: 54ch; margin: 28px 0 32px; font-size: 1.15rem; color: var(--muted); }
+.hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+.hero-hint {
+  max-width: 46ch; margin-top: 44px; font-size: 0.9rem; color: var(--muted);
+  padding-left: 14px; border-left: 2px solid var(--signal);
+}
+
+/* ============ Sections ============ */
+.section { padding: clamp(72px, 10vw, 128px) 0; }
+.section.alt { background: var(--bg-2); }
+.two-col { display: grid; grid-template-columns: 1fr 2.3fr; gap: clamp(28px, 6vw, 88px); align-items: start; }
+.col-head { position: sticky; top: calc(var(--nav-h) + 28px); }
+.col-head h2, .projects-head h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; }
+.col-head p { margin-top: 12px; max-width: 26ch; }
+.lead { font-size: 1.3rem; line-height: 1.55; font-weight: 500; }
+.sub { font-size: 1.25rem; margin: 48px 0 16px; font-weight: 700; }
+.sub.first { margin-top: 0; }
+
+.js .reveal { opacity: 0; transition: opacity 0.8s ease; }
+.js .reveal.in { opacity: 1; }
+
+/* About */
+.edu { list-style: none; border-top: 1px solid var(--line); }
+.edu li {
+  display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+  padding: 20px 0; border-bottom: 1px solid var(--line);
+}
+.edu strong { display: block; font-size: 1.1rem; }
+.edu span { color: var(--muted); }
+.edu time { color: var(--signal); font-weight: 500; white-space: nowrap; }
+
+/* Timeline */
+.timeline { list-style: none; position: relative; padding-left: 34px; }
+.timeline::before {
+  content: ""; position: absolute; left: 6px; top: 8px; bottom: 8px; width: 2px;
+  background: linear-gradient(var(--accent), var(--line));
+}
+.timeline > li { position: relative; padding-bottom: 52px; }
+.timeline > li:last-child { padding-bottom: 0; }
+.timeline > li::before {
+  content: ""; position: absolute; left: -34px; top: 8px; width: 14px; height: 14px;
+  background: var(--bg-2); border: 3px solid var(--accent); border-radius: 50%;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+.timeline > li:hover::before { background: var(--signal); border-color: var(--signal); }
+.timeline time { color: var(--signal); font-weight: 500; font-size: 0.95rem; }
+.timeline h3 { font-size: 1.6rem; margin: 6px 0 2px; }
+.org { color: var(--muted); font-weight: 500; margin-bottom: 14px; }
+.timeline ul { padding-left: 20px; margin-bottom: 18px; max-width: 64ch; }
+.timeline ul li { margin-bottom: 8px; }
+.timeline ul li::marker { color: var(--accent); }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips span {
+  padding: 4px 12px; border-radius: 999px; font-size: 0.85rem; font-weight: 500;
+  background: var(--chip); color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+}
+
+/* Projects */
+.projects-head { max-width: 60ch; margin-bottom: 48px; }
+.projects-head p { color: var(--muted); margin-top: 14px; }
+.projects { border-top: 1px solid var(--line); }
+.project { border-bottom: 1px solid var(--line); transition: background-color 0.3s; }
+.project.open { background: linear-gradient(90deg, var(--chip), transparent 70%); }
+.project-toggle {
+  width: 100%; display: grid; grid-template-columns: 1fr auto 28px; gap: 20px; align-items: center;
+  padding: 34px 6px; background: none; border: 0; text-align: left;
+}
+.project-name {
+  font-family: var(--font-display); font-weight: 800; letter-spacing: -0.03em;
+  font-size: clamp(1.7rem, 4.4vw, 3.2rem); line-height: 1.05;
+  transition: color 0.25s, transform 0.3s;
+}
+.project-toggle:hover .project-name, .project.open .project-name { color: var(--accent); }
+.project-toggle:hover .project-name { transform: translateX(6px); }
+.project-tag { color: var(--muted); font-size: 0.95rem; text-align: right; max-width: 24ch; }
+.plus { position: relative; width: 22px; height: 22px; justify-self: end; }
+.plus::before, .plus::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 2px; margin-top: -1px;
+  background: var(--signal); transition: transform 0.3s;
+}
+.plus::after { transform: rotate(90deg); }
+.project.open .plus::after { transform: rotate(0deg); }
+
+.project-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s ease; }
+.project.open .project-panel { grid-template-rows: 1fr; }
+.project-inner { overflow: hidden; min-height: 0; padding: 0 6px; max-width: 760px; }
+.project.open .project-inner { padding-bottom: 38px; }
+.project-inner ul { padding-left: 20px; margin: 0 0 20px; }
+.project-inner li { margin-bottom: 8px; }
+.project-inner li::marker { color: var(--accent); }
+.project-inner .chips { margin-bottom: 24px; }
+.links { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* Skills */
+.skill-group { margin: 0 0 30px; display: grid; grid-template-columns: 170px 1fr; gap: 12px 24px; align-items: start; }
+.skill-group dt { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; padding-top: 7px; }
+.skill-group dd { margin: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.skill {
+  padding: 7px 16px; border-radius: 999px; background: transparent;
+  border: 1px solid var(--line); font-size: 0.97rem; font-weight: 500;
+  transition: border-color 0.2s, background-color 0.2s, color 0.2s, transform 0.2s;
+}
+.skill:hover { border-color: var(--accent); transform: translateY(-2px); }
+.skill[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.skill-info {
+  margin-top: 8px; padding: 16px 20px; border-left: 3px solid var(--signal);
+  background: var(--chip); border-radius: 0 var(--radius) var(--radius) 0; min-height: 60px;
+}
+
+/* Credentials */
+.certs, .wins { list-style: none; border-top: 1px solid var(--line); }
+.certs li, .wins li { padding: 16px 0; border-bottom: 1px solid var(--line); }
+.certs li { display: flex; justify-content: space-between; gap: 8px 24px; flex-wrap: wrap; }
+.certs span { color: var(--muted); }
+.wins li { padding-left: 20px; position: relative; }
+.wins li::before { content: ""; position: absolute; left: 0; top: 1.4em; width: 8px; height: 8px; border-radius: 50%; background: var(--signal); }
+
+/* Contact */
+.contact-list { list-style: none; border-top: 1px solid var(--line); margin: 28px 0 44px; }
+.contact-list li { display: flex; gap: 24px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.contact-list span { width: 90px; color: var(--muted); }
+.contact-list a { font-weight: 500; word-break: break-word; }
+.form { display: grid; gap: 20px; max-width: 620px; }
+.field { display: grid; gap: 8px; }
+.field label { font-weight: 600; font-size: 0.95rem; }
+.field input, .field textarea {
+  width: 100%; padding: 14px 16px; font: inherit; color: var(--ink);
+  background: var(--bg-2); border: 1.5px solid var(--line); border-radius: var(--radius);
+  transition: border-color 0.2s;
+}
+.contact .field input, .contact .field textarea { background: var(--bg-2); }
+.field input:focus, .field textarea:focus { outline: none; border-color: var(--accent); }
+.field.invalid input, .field.invalid textarea { border-color: #ff6b6b; }
+.form .btn { justify-self: start; }
+.form-note { margin: 0; min-height: 1.5em; color: var(--muted); font-size: 0.95rem; }
+.form-note.error { color: #ff8a8a; }
+:root[data-theme="light"] .form-note.error { color: #b42318; }
+
+/* Footer */
+.footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--muted); font-size: 0.92rem; }
+.footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.footer p { margin: 0; }
+
+/* ============ Responsive ============ */
+@media (max-width: 900px) {
+  .two-col { grid-template-columns: 1fr; }
+  .col-head { position: static; }
+  .col-head p { max-width: none; }
+  .skill-group { grid-template-columns: 1fr; }
+  .skill-group dt { padding-top: 0; }
+  .hero::after { background: linear-gradient(180deg, color-mix(in srgb, var(--bg) 70%, transparent), color-mix(in srgb, var(--bg) 88%, transparent)); }
+  .project-toggle { grid-template-columns: 1fr 28px; }
+  .project-tag { grid-column: 1; grid-row: 2; text-align: left; max-width: none; }
+  .plus { grid-column: 2; grid-row: 1; }
+}
+
+@media (max-width: 820px) {
+  .menu-btn { display: grid; }
+  .nav-links {
+    position: absolute; top: var(--nav-h); left: 0; right: 0; flex-direction: column; gap: 0;
+    background: var(--bg); border-bottom: 1px solid var(--line); padding: 8px 24px 16px;
+    display: none;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a { padding: 14px 4px; border-radius: 0; }
+  .nav-links a.active { background: none; color: var(--accent); }
+  .edu time { white-space: normal; }
+  .contact-list li { flex-direction: column; gap: 2px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+  .reveal { opacity: 1; }
+}
+
+</style>
+</head>
+<body>
+  <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="#top" aria-label="Shashwat Sahu, home">Shashwat<span>.</span></a>
+    <nav aria-label="Primary">
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#credentials">Credentials</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav-tools">
+      <button class="icon-btn" id="themeToggle" aria-label="Switch to light theme" title="Toggle theme">
+        <svg class="i-sun" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <canvas id="grid" aria-hidden="true"></canvas>
+      <div class="hero-inner">
+        <p class="hero-kicker">Shashwat Sahu</p>
+        <h1>I build machine learning systems for <span id="rotator" class="rotator">weather</span>.</h1>
+        <p class="hero-sub">B.Tech Computer Science student at SRM University AP, specializing in AI/ML. Exchange student at Universiti Teknologi Malaysia. I turn models into web apps people can actually use.</p>
+        <div class="hero-cta">
+          <a class="btn primary" href="#projects">See my projects</a>
+          <a class="btn ghost" href="#contact">Get in touch</a>
+        </div>
+        <p class="hero-hint" id="gridHint">Move your cursor over the grid. Coarse forecast cells sharpen into a finer map, the way precipitation downscaling works.</p>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section" id="about">
+      <div class="wrap two-col">
+        <div class="col-head reveal">
+          <h2>About</h2>
+        </div>
+        <div class="col-body reveal">
+          <p class="lead">I'm a Computer Science student focused on AI and machine learning. I like projects where a model has a real job to do: forecasting rainfall, recommending crops, or scheduling railway maintenance.</p>
+          <p>I've built and deployed ML applications, worked through data cleaning and dashboards in Power BI, and developed full-stack web interfaces with React, TypeScript and FastAPI. In Spring 2026 I was selected as an exchange student at Universiti Teknologi Malaysia.</p>
+
+          <h3 class="sub">Education</h3>
+          <ul class="edu">
+            <li>
+              <div>
+                <strong>SRM University, Andhra Pradesh</strong>
+                <span>B.Tech in Computer Science and Engineering</span>
+              </div>
+              <time>Aug 2024 to July 2028</time>
+            </li>
+            <li>
+              <div>
+                <strong>Universiti Teknologi Malaysia (UTM)</strong>
+                <span>Exchange student, B.Tech in Computer Science and Engineering</span>
+              </div>
+              <time>Mar 2026 to July 2026</time>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="section alt" id="experience">
+      <div class="wrap two-col">
+        <div class="col-head reveal">
+          <h2>Experience</h2>
+        </div>
+        <ol class="timeline">
+          <li class="reveal">
+            <time>June 2026 to July 2026</time>
+            <h3>AI &amp; ML Intern</h3>
+            <p class="org">TheSmartBridge</p>
+            <ul>
+              <li>Developed and deployed OptiCrop, an ML-based crop recommendation web application using Python, Flask and Scikit-learn.</li>
+              <li>Trained and evaluated multiple ML models, including Random Forest, SVM and XGBoost, to deliver crop predictions based on soil and environmental conditions.</li>
+            </ul>
+            <div class="chips"><span>Python</span><span>Flask</span><span>Scikit-learn</span><span>XGBoost</span></div>
+          </li>
+          <li class="reveal">
+            <time>Feb 2026 to Mar 2026</time>
+            <h3>Microsoft Power BI Data Analyst Intern</h3>
+            <p class="org">Microsoft Elevate, AICTE</p>
+            <ul>
+              <li>Developed an interactive Power BI dashboard to analyze air quality data and visualize environmental trends.</li>
+              <li>Performed data cleaning, transformation and visualization to generate actionable insights through data-driven reports.</li>
+            </ul>
+            <div class="chips"><span>Power BI</span><span>Data cleaning</span><span>Visualization</span></div>
+          </li>
+          <li class="reveal">
+            <time>July 2025 to Dec 2025</time>
+            <h3>Campus Ambassador</h3>
+            <p class="org">IIT Bombay</p>
+            <ul>
+              <li>Represented IIT Bombay, promoting technical, entrepreneurial and innovation-focused initiatives and national-level programs.</li>
+              <li>Coordinated student outreach for workshops and competitions, strengthening communication, leadership and stakeholder management skills.</li>
+            </ul>
+            <div class="chips"><span>Leadership</span><span>Outreach</span><span>Communication</span></div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="section" id="projects">
+      <div class="wrap">
+        <div class="projects-head reveal">
+          <h2>Projects</h2>
+          <p>Three builds across weather, railways and agriculture. Select a project to read more.</p>
+        </div>
+
+        <div class="projects">
+          <article class="project open" data-project>
+            <button class="project-toggle" aria-expanded="true" aria-controls="p1">
+              <span class="project-name">VarshaPurvanumanAI</span>
+              <span class="project-tag">Smart India Hackathon, SIH26080</span>
+              <span class="plus" aria-hidden="true"></span>
+            </button>
+            <div class="project-panel" id="p1">
+              <div class="project-inner">
+                <p>An AI/ML rainfall prediction post-processing system focused on spatial downscaling of precipitation forecasts, turning coarse model output into finer, more useful local detail.</p>
+                <ul>
+                  <li>Worked on the downscaling approach for precipitation forecasts.</li>
+                  <li>Implemented ML workflows and FastAPI services to support model inference and backend processing.</li>
+                </ul>
+                <div class="chips"><span>Python</span><span>PyTorch</span><span>FastAPI</span><span>React</span><span>TypeScript</span><span>Tailwind CSS</span></div>
+                <div class="links">
+                  <a class="btn small primary" href="#" data-link="demo" target="_blank" rel="noopener">Live demo</a>
+                  <a class="btn small ghost" href="#" data-link="github" target="_blank" rel="noopener">GitHub</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="project" data-project>
+            <button class="project-toggle" aria-expanded="false" aria-controls="p2">
+              <span class="project-name">RailSamanvayAI</span>
+              <span class="project-tag">Smart India Hackathon, SIH26027</span>
+              <span class="plus" aria-hidden="true"></span>
+            </button>
+            <div class="project-panel" id="p2">
+              <div class="project-inner">
+                <p>A decision-support system for railway maintenance block scheduling that plans work without clashing with running trains.</p>
+                <ul>
+                  <li>Developed decision-support components for maintenance block scheduling.</li>
+                  <li>Designed optimization logic that considers asset failure risks, train schedules and crew availability for conflict-aware maintenance planning.</li>
+                </ul>
+                <div class="chips"><span>Python</span><span>Scikit-learn</span><span>React</span><span>TypeScript</span><span>Tailwind CSS</span></div>
+                <div class="links">
+                  <a class="btn small primary" href="#" data-link="demo" target="_blank" rel="noopener">Live demo</a>
+                  <a class="btn small ghost" href="#" data-link="github" target="_blank" rel="noopener">GitHub</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="project" data-project>
+            <button class="project-toggle" aria-expanded="false" aria-controls="p3">
+              <span class="project-name">OptiCrop</span>
+              <span class="project-tag">ML-based crop recommendation system</span>
+              <span class="plus" aria-hidden="true"></span>
+            </button>
+            <div class="project-panel" id="p3">
+              <div class="project-inner">
+                <p>A web application that recommends crops from soil and environmental conditions, deployed on Render for real-time prediction.</p>
+                <ul>
+                  <li>Trained multiple models, including Random Forest, SVM and XGBoost, and deployed the best performer.</li>
+                  <li>Built the web interface and prediction API with Flask.</li>
+                </ul>
+                <div class="chips"><span>Python</span><span>Flask</span><span>Scikit-learn</span><span>Pandas</span><span>NumPy</span></div>
+                <div class="links">
+                  <a class="btn small primary" href="#" data-link="demo" target="_blank" rel="noopener">Live demo</a>
+                  <a class="btn small ghost" href="#" data-link="github" target="_blank" rel="noopener">GitHub</a>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="section alt" id="skills">
+      <div class="wrap two-col">
+        <div class="col-head reveal">
+          <h2>Skills</h2>
+          <p class="muted">Select a skill to see where I've used it.</p>
+        </div>
+        <div class="skills reveal">
+          <dl class="skill-group">
+            <dt>Languages</dt>
+            <dd>
+              <button class="skill" data-info="Core language for my ML work: PyTorch, Scikit-learn, Flask and FastAPI projects.">Python</button>
+              <button class="skill" data-info="Used for data structures and algorithms practice and core CS coursework.">C</button>
+              <button class="skill" data-info="Used for data structures and algorithms practice and core CS coursework.">C++</button>
+              <button class="skill" data-info="Used for object-oriented programming and core CS coursework.">Java</button>
+              <button class="skill" data-info="Used alongside database management coursework and data analysis.">SQL</button>
+            </dd>
+          </dl>
+          <dl class="skill-group">
+            <dt>Computer science</dt>
+            <dd>
+              <button class="skill" data-info="Object-Oriented Programming, part of my core CS foundation.">OOP</button>
+              <button class="skill" data-info="Data Structures and Algorithms, the base for the optimization logic in RailSamanvayAI.">DSA</button>
+              <button class="skill" data-info="Database Management Systems, backed by the University of Colorado System course on Coursera.">DBMS</button>
+              <button class="skill" data-info="Computer Organization and Architecture, part of my core CS foundation.">COA</button>
+              <button class="skill" data-info="Random Forest, SVM and XGBoost in OptiCrop; PyTorch in VarshaPurvanumanAI.">Machine Learning</button>
+              <button class="skill" data-info="Operating Systems, part of my core CS foundation.">Operating Systems</button>
+            </dd>
+          </dl>
+          <dl class="skill-group">
+            <dt>Developer tools</dt>
+            <dd>
+              <button class="skill" data-info="Version control across all my projects.">Git</button>
+              <button class="skill" data-info="Hosting my project repositories.">GitHub</button>
+              <button class="skill" data-info="My everyday editor.">Visual Studio Code</button>
+            </dd>
+          </dl>
+          <dl class="skill-group">
+            <dt>Data analytics</dt>
+            <dd>
+              <button class="skill" data-info="Built an air quality dashboard during my Microsoft Elevate internship with AICTE.">Microsoft Power BI</button>
+            </dd>
+          </dl>
+          <dl class="skill-group">
+            <dt>Web stack in my projects</dt>
+            <dd>
+              <button class="skill" data-info="Frontends for VarshaPurvanumanAI and RailSamanvayAI.">React</button>
+              <button class="skill" data-info="Typed frontends for VarshaPurvanumanAI and RailSamanvayAI.">TypeScript</button>
+              <button class="skill" data-info="Styling for VarshaPurvanumanAI and RailSamanvayAI.">Tailwind CSS</button>
+              <button class="skill" data-info="Model-serving backend for VarshaPurvanumanAI.">FastAPI</button>
+              <button class="skill" data-info="Backend for OptiCrop.">Flask</button>
+            </dd>
+          </dl>
+          <p class="skill-info" id="skillInfo" role="status" aria-live="polite">Pick a skill above.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CREDENTIALS -->
+    <section class="section" id="credentials">
+      <div class="wrap two-col">
+        <div class="col-head reveal">
+          <h2>Credentials</h2>
+        </div>
+        <div class="col-body">
+          <div class="reveal">
+            <h3 class="sub first">Certifications</h3>
+            <ul class="certs">
+              <li><strong>Oracle Cloud Infrastructure 2025, AI Foundations Associate</strong><span>Oracle</span></li>
+              <li><strong>Python for Data Science, AI &amp; Development</strong><span>IBM, Coursera</span></li>
+              <li><strong>Database Management Essentials</strong><span>University of Colorado System, Coursera</span></li>
+              <li><strong>Introduction to Software Engineering</strong><span>IBM, Coursera</span></li>
+              <li><strong>Machine Learning</strong><span>Infosys</span></li>
+              <li><strong>Generative AI</strong><span>Microsoft and LinkedIn</span></li>
+            </ul>
+          </div>
+          <div class="reveal">
+            <h3 class="sub">Achievements and activities</h3>
+            <ul class="wins">
+              <li>Selected as an exchange student (Spring 2026) at Universiti Teknologi Malaysia.</li>
+              <li>Solo finalist, National Level Hackathon at IIT Roorkee.</li>
+              <li>Finalist, SIH 2026 internal round, SRM University AP.</li>
+              <li>Member of the Athletics Club, SRM University AP.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section contact" id="contact">
+      <div class="wrap two-col">
+        <div class="col-head reveal">
+          <h2>Contact</h2>
+        </div>
+        <div class="col-body reveal">
+          <p class="lead">Open to internships, research collaborations and hackathon teams. Send me a message and I'll reply by email.</p>
+          <ul class="contact-list">
+            <li><span>Email</span><a href="mailto:sahushashwat75@gmail.com">sahushashwat75@gmail.com</a></li>
+            <li><span>Phone</span><a href="tel:+919376152267">+91 93761 52267</a></li>
+            <li><span>LinkedIn</span><a href="#" data-link="linkedin" target="_blank" rel="noopener">Connect on LinkedIn</a></li>
+            <li><span>GitHub</span><a href="#" data-link="github-profile" target="_blank" rel="noopener">See my code</a></li>
+          </ul>
+
+          <form class="form" id="contactForm" novalidate>
+            <div class="field">
+              <label for="name">Your name</label>
+              <input id="name" name="name" type="text" autocomplete="name" required />
+            </div>
+            <div class="field">
+              <label for="email">Your email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required />
+            </div>
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" required></textarea>
+            </div>
+            <button class="btn primary" type="submit">Send message</button>
+            <p class="form-note" id="formNote" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p>&copy; <span id="year">2026</span> Shashwat Sahu</p>
+      <a href="#top" class="to-top">Back to top</a>
+    </div>
+  </footer>
+
+  <script>
+/* =====================================================
+   EDIT YOUR LINKS HERE
+   Leave a value as "" and that button/link is hidden
+   until you paste in the real URL.
+   ===================================================== */
+const LINKS = {
+  linkedin: "",   // e.g. "https://www.linkedin.com/in/your-id"
+  github: "",     // e.g. "https://github.com/your-username"
+  projects: [
+    { demo: "", github: "" }, // VarshaPurvanumanAI
+    { demo: "", github: "" }, // RailSamanvayAI
+    { demo: "", github: "" }  // OptiCrop
+  ]
+};
+
+(function () {
+  "use strict";
+
+  document.documentElement.classList.add("js");
+  const root = document.documentElement;
+  const $ = (s, c = document) => c.querySelector(s);
+  const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- Links ---------- */
+  function applyLink(el, url) {
+    if (url) {
+      el.href = url;
+    } else {
+      el.hidden = true;
+    }
+  }
+  $$("[data-link='linkedin']").forEach((el) => applyLink(el, LINKS.linkedin));
+  $$("[data-link='github-profile']").forEach((el) => applyLink(el, LINKS.github));
+  $$("[data-project]").forEach((card, i) => {
+    const cfg = LINKS.projects[i] || {};
+    applyLink($("[data-link='demo']", card), cfg.demo);
+    applyLink($("[data-link='github']", card), cfg.github);
+  });
+  // Hide whole contact rows or link groups when every link inside is hidden
+  $$(".contact-list li").forEach((li) => {
+    const a = $("a", li);
+    if (a && a.hidden) li.hidden = true;
+  });
+  $$(".links").forEach((box) => {
+    if ($$("a", box).every((a) => a.hidden)) box.hidden = true;
+  });
+
+  /* ---------- Theme ---------- */
+  const themeBtn = $("#themeToggle");
+  const themeMeta = $("meta[name='theme-color']");
+  function setTheme(t) {
+    root.setAttribute("data-theme", t);
+    themeBtn.setAttribute("aria-label", t === "dark" ? "Switch to light theme" : "Switch to dark theme");
+    if (themeMeta) themeMeta.setAttribute("content", t === "dark" ? "#0a1524" : "#f2f6f9");
+  }
+  let saved = null;
+  try { saved = localStorage.getItem("theme"); } catch (e) { /* storage unavailable */ }
+  if (!saved && window.matchMedia("(prefers-color-scheme: light)").matches) saved = "light";
+  setTheme(saved || "dark");
+  themeBtn.addEventListener("click", () => {
+    const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    setTheme(next);
+    try { localStorage.setItem("theme", next); } catch (e) { /* ignore */ }
+    drawOnce();
+  });
+
+  /* ---------- Nav: scroll state, progress, menu, active link ---------- */
+  const nav = $("#nav");
+  const bar = $("#progressBar");
+  function onScroll() {
+    const y = window.scrollY;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (max > 0 ? (y / max) * 100 : 0) + "%";
+    nav.classList.toggle("scrolled", y > 8);
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  const menuBtn = $("#menuBtn");
+  const navLinks = $("#navLinks");
+  function closeMenu() {
+    navLinks.classList.remove("open");
+    menuBtn.setAttribute("aria-expanded", "false");
+  }
+  menuBtn.addEventListener("click", () => {
+    const open = navLinks.classList.toggle("open");
+    menuBtn.setAttribute("aria-expanded", String(open));
+  });
+  $$("a", navLinks).forEach((a) => a.addEventListener("click", closeMenu));
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeMenu(); });
+
+  const sections = ["about", "experience", "projects", "skills", "credentials", "contact"]
+    .map((id) => document.getElementById(id));
+  if ("IntersectionObserver" in window) {
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (en.isIntersecting) {
+          $$("a", navLinks).forEach((a) => {
+            a.classList.toggle("active", a.getAttribute("href") === "#" + en.target.id);
+          });
+        }
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    sections.forEach((s) => s && spy.observe(s));
+  }
+
+  /* ---------- Reveal on scroll ---------- */
+  const revealEls = $$(".reveal");
+  if ("IntersectionObserver" in window && !reduceMotion) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach((el) => io.observe(el));
+  } else {
+    revealEls.forEach((el) => el.classList.add("in"));
+  }
+
+  /* ---------- Hero headline rotator ---------- */
+  const rot = $("#rotator");
+  const words = ["weather", "farms", "railways", "real users"];
+  if (!reduceMotion) {
+    let w = 0, i = words[0].length, deleting = false;
+    (function tick() {
+      const word = words[w];
+      rot.textContent = word.slice(0, i);
+      let delay = deleting ? 45 : 90;
+      if (!deleting && i === word.length) { deleting = true; delay = 1900; }
+      else if (deleting && i === 0) { deleting = false; w = (w + 1) % words.length; delay = 250; }
+      i += deleting ? -1 : 1;
+      if (i < 0) i = 0;
+      setTimeout(tick, delay);
+    })();
+  }
+
+  /* ---------- Hero canvas: precipitation downscaling lens ---------- */
+  const canvas = $("#grid");
+  const ctx = canvas.getContext("2d");
+  const hero = $("#top");
+  let W = 0, H = 0, dpr = 1, coarse = 56, t = 0;
+  const lens = { x: 0, y: 0, r: 0, targetR: 0, active: false, touched: false };
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const rect = hero.getBoundingClientRect();
+    W = rect.width; H = rect.height;
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    coarse = W < 700 ? 44 : 56;
+    lens.targetR = W < 700 ? 110 : 170;
+    drawOnce();
+  }
+
+  // Synthetic rainfall field, 0..1. The high-frequency term is the detail
+  // a coarse forecast cannot show but a downscaled one recovers.
+  function field(x, y, time) {
+    const a = Math.sin(x * 0.0065 + time * 0.5) + Math.cos(y * 0.008 - time * 0.35);
+    const b = Math.sin((x + y) * 0.004 + time * 0.25) * 1.2;
+    const fine = Math.sin(x * 0.045 + time * 0.9) * Math.cos(y * 0.05 - time * 0.7) * 0.35;
+    const v = (a + b + fine + 3) / 6;
+    return Math.max(0, Math.min(1, v));
+  }
+
+  function color(v) {
+    const light = root.getAttribute("data-theme") === "light";
+    if (v > 0.78) {
+      return light ? "rgba(168,85,0," + (0.18 + (v - 0.78) * 2.6) + ")" : "rgba(255,180,84," + (0.28 + (v - 0.78) * 2.2) + ")";
+    }
+    const a = Math.max(0, (v - 0.28)) * (light ? 0.75 : 0.62);
+    return light ? "rgba(10,111,168," + a + ")" : "rgba(92,200,255," + a + ")";
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    const cols = Math.ceil(W / coarse), rows = Math.ceil(H / coarse);
+    const R = lens.r, R2 = R * R;
+    const sub = 6, fs = coarse / sub;
+
+    for (let cy = 0; cy < rows; cy++) {
+      for (let cx = 0; cx < cols; cx++) {
+        const x0 = cx * coarse, y0 = cy * coarse;
+        const mx = x0 + coarse / 2, my = y0 + coarse / 2;
+        const dx = mx - lens.x, dy = my - lens.y;
+        const near = R > 1 && Math.sqrt(dx * dx + dy * dy) < R + coarse;
+
+        if (!near) {
+          ctx.fillStyle = color(field(mx, my, t));
+          ctx.fillRect(x0 + 1, y0 + 1, coarse - 2, coarse - 2);
+          continue;
+        }
+        // Inside the lens: draw fine cells, but only those within the radius;
+        // the rest of the block falls back to the coarse value.
+        const cv = color(field(mx, my, t));
+        for (let sy = 0; sy < sub; sy++) {
+          for (let sx = 0; sx < sub; sx++) {
+            const fx = x0 + sx * fs, fy = y0 + sy * fs;
+            const px = fx + fs / 2 - lens.x, py = fy + fs / 2 - lens.y;
+            if (px * px + py * py < R2) {
+              ctx.fillStyle = color(field(fx + fs / 2, fy + fs / 2, t));
+              ctx.fillRect(fx + 0.4, fy + 0.4, fs - 0.8, fs - 0.8);
+            } else {
+              ctx.fillStyle = cv;
+              ctx.fillRect(fx + (sx === 0 ? 1 : 0), fy + (sy === 0 ? 1 : 0), fs + (sx === sub - 1 ? -1 : 0), fs + (sy === sub - 1 ? -1 : 0));
+            }
+          }
+        }
+      }
+    }
+    if (R > 1) {
+      ctx.strokeStyle = root.getAttribute("data-theme") === "light" ? "rgba(168,85,0,0.7)" : "rgba(255,180,84,0.6)";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(lens.x, lens.y, R, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+  }
+
+  function drawOnce() { if (W) draw(); }
+
+  let running = false, last = 0;
+  function frame(now) {
+    if (!running) return;
+    const dt = Math.min((now - last) / 1000, 0.05);
+    last = now;
+    t += dt;
+    if (!lens.touched) {
+      // Idle: the lens drifts on its own so the idea is visible straight away
+      lens.x = W * 0.68 + Math.cos(t * 0.5) * W * 0.12;
+      lens.y = H * 0.5 + Math.sin(t * 0.7) * H * 0.18;
+      lens.r += (lens.targetR - lens.r) * 0.05;
+    } else {
+      lens.r += ((lens.active ? lens.targetR : 0) - lens.r) * 0.12;
+    }
+    draw();
+    requestAnimationFrame(frame);
+  }
+  function start() { if (!running && !reduceMotion) { running = true; last = performance.now(); requestAnimationFrame(frame); } }
+  function stop() { running = false; }
+
+  hero.addEventListener("pointermove", (e) => {
+    const r = hero.getBoundingClientRect();
+    lens.x = e.clientX - r.left;
+    lens.y = e.clientY - r.top;
+    lens.touched = true;
+    lens.active = true;
+    if (reduceMotion) { lens.r = lens.targetR; drawOnce(); }
+  });
+  hero.addEventListener("pointerleave", () => {
+    lens.active = false;
+    if (reduceMotion) { lens.r = 0; drawOnce(); }
+  });
+
+  window.addEventListener("resize", resize);
+  resize();
+  if (reduceMotion) {
+    lens.x = W * 0.68; lens.y = H * 0.5; lens.r = lens.targetR; drawOnce();
+  } else if ("IntersectionObserver" in window) {
+    new IntersectionObserver((en) => { en[0].isIntersecting ? start() : stop(); }, { threshold: 0 }).observe(hero);
+  } else {
+    start();
+  }
+
+  /* ---------- Projects accordion ---------- */
+  const projects = $$("[data-project]");
+  projects.forEach((p) => {
+    const btn = $(".project-toggle", p);
+    btn.addEventListener("click", () => {
+      const willOpen = !p.classList.contains("open");
+      projects.forEach((o) => {
+        o.classList.remove("open");
+        $(".project-toggle", o).setAttribute("aria-expanded", "false");
+      });
+      if (willOpen) {
+        p.classList.add("open");
+        btn.setAttribute("aria-expanded", "true");
+      }
+    });
+  });
+
+  /* ---------- Skills ---------- */
+  const skillInfo = $("#skillInfo");
+  const skillBtns = $$(".skill");
+  skillBtns.forEach((b) => {
+    b.setAttribute("aria-pressed", "false");
+    b.addEventListener("click", () => {
+      const already = b.getAttribute("aria-pressed") === "true";
+      skillBtns.forEach((o) => o.setAttribute("aria-pressed", "false"));
+      if (already) {
+        skillInfo.textContent = "Pick a skill above.";
+      } else {
+        b.setAttribute("aria-pressed", "true");
+        skillInfo.textContent = b.textContent + ": " + b.dataset.info;
+      }
+    });
+  });
+
+  /* ---------- Contact form (opens the visitor's email app) ---------- */
+  const form = $("#contactForm");
+  const note = $("#formNote");
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    const message = form.message.value.trim();
+    let ok = true;
+    [["name", name], ["email", /^\S+@\S+\.\S+$/.test(email) && email], ["message", message]].forEach(([id, val]) => {
+      const field = document.getElementById(id).closest(".field");
+      field.classList.toggle("invalid", !val);
+      if (!val) ok = false;
+    });
+    note.classList.toggle("error", !ok);
+    if (!ok) {
+      note.textContent = "Please fill in your name, a valid email and a message.";
+      return;
+    }
+    const subject = encodeURIComponent("Portfolio message from " + name);
+    const body = encodeURIComponent(message + "\n\nFrom: " + name + " (" + email + ")");
+    window.location.href = "mailto:sahushashwat75@gmail.com?subject=" + subject + "&body=" + body;
+    note.textContent = "Opening your email app. If nothing opens, write to sahushashwat75@gmail.com directly.";
+  });
+
+  /* ---------- Footer year ---------- */
+  $("#year").textContent = new Date().getFullYear();
+})();
+
+</script>
+</body>
+</html>
